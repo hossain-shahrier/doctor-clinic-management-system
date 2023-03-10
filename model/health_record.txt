@@ -1,0 +1,2 @@
+640867a3d984b|Turja|2023-03-04|Pending|hypertension|Headache|2023-03-03|
+6408cd1ef0cef|ELin|2023-03-10|Pending|hypertension||2023-04-01|
