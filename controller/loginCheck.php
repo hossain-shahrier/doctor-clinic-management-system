@@ -7,14 +7,14 @@ if (isset($_POST['submit'])) {
     if (empty($email) || empty($password)) {
         echo "Null Input";
     } else {
-        $status     = validateUser($email, $password);
-
+        $status = validateUser($email, $password);
+        echo $status;
         if ($status) {
             $_SESSION['email'] = $email;
             $_SESSION['username'] = userName($email);
             $_SESSION['type'] = userType($email);
 
-            header('location: ../view/doctor/home.php');
+            header('Location: ../view/doctor/home.php');
         } else {
             echo "Invalid User";
         }

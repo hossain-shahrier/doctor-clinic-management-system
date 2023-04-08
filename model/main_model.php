@@ -1,93 +1,90 @@
 <?php
+require_once('config/db_config.php');
 // Insert user into user.txt file
 function insertUser($user)
 {
-    $dir = dirname(__FILE__);
-    $file = fopen($dir . '/doctor.txt', 'r');
+    $conn = dbConnect();
     $finduser = false;
-    while (!feof($file)) {
-        $data = fgets($file);
-        $user_data = explode('|', $data);
-        if ($user_data[2] == $user['email']) {
-            $finduser = true;
-            break;
-        }
+
+    // Check if the user already exists in the database
+    $query = "SELECT * FROM users WHERE email='" . $user['email'] . "'";
+    $result = mysqli_query($conn, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        $finduser = true;
     }
-    fclose($file);
+
     if ($finduser) {
         return false;
     } else {
-        $file = fopen('../model/doctor.txt', 'a');
-        $user = $user['username'] . '|' . $user['password'] . '|' . $user['email'] . '|' . $user['phone'] . '|' . $user['address'] . '|' . $user['type'] . "|" . "\n";
-        fwrite($file, $user);
-        fclose($file);
-        return true;
+        // Insert the user data into the database
+        $query = "INSERT INTO users VALUES ('','$user[username]','$user[password]','$user[email]','$user[phone]','$user[address]','$user[type]','')";
+        if (mysqli_query($conn, $query)) {
+            mysqli_close($conn);
+            return true;
+        } else {
+            mysqli_close($conn);
+            return false;
+        }
     }
 }
-// Validate user
+
 function validateUser($email, $password)
 {
-    $dir = dirname(__FILE__);
-    $file = fopen($dir . '/doctor.txt', 'r');
-    $finduser = false;
-    while (!feof($file)) {
-        $data = fgets($file);
-        $user_data = explode('|', $data);
-        if ($user_data[1] == $password && $user_data[2] == $email) {
-            $finduser = true;
-            break;
-        }
-    }
-    fclose($file);
-    if ($finduser) {
+    // Create database connection
+    $conn = dbConnect();
+
+    // Sanitize input values
+    $email = mysqli_real_escape_string($conn, $email);
+    $password = mysqli_real_escape_string($conn, $password);
+
+    // Query the database for user with matching email and password
+    $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+    $result = mysqli_query($conn, $sql);
+
+    // Check if query returns a row
+    if (mysqli_num_rows($result) == 1) {
         return true;
     } else {
         return false;
     }
+
+    // Close the database connection
+    mysqli_close($conn);
 }
+
 // Get user name
 function userName($email)
 {
-    $dir = dirname(__FILE__);
-    $file = fopen($dir . '/doctor.txt', 'r');
-    $finduser = false;
-    while (!feof($file)) {
-        $data = fgets($file);
-        $user_data = explode('|', $data);
-        if ($user_data[2] == $email) {
-            $finduser = true;
-            break;
-        }
-    }
-    fclose($file);
-    if ($finduser) {
-        return $user_data[0];
+    $conn = dbConnect();
+    $sql = "SELECT username FROM users WHERE email='$email'";
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        return $user['username'];
     } else {
         return false;
     }
 }
 
-// get user type
+
 function userType($email)
 {
-    $dir = dirname(__FILE__);
-    $file = fopen($dir . '/doctor.txt', 'r');
-    $finduser = false;
-    while (!feof($file)) {
-        $data = fgets($file);
-        $user_data = explode('|', $data);
-        if ($user_data[2] == $email) {
-            $finduser = true;
-            break;
-        }
-    }
-    fclose($file);
-    if ($finduser) {
-        return $user_data[5];
+    $conn = dbConnect();
+
+    // Construct SQL query
+    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
+
+    // Execute query
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        return $user['type'];
     } else {
         return false;
     }
 }
+
 
 // get all doctors
 function getAllDoctors()
@@ -106,20 +103,16 @@ function getAllDoctors()
 // get user by email
 function getUserByEmail($email)
 {
-    $dir = dirname(__FILE__);
-    $file = fopen($dir . '/doctor.txt', 'r');
-    $finduser = false;
-    while (!feof($file)) {
-        $data = fgets($file);
-        $user_data = explode('|', $data);
-        if ($user_data[2] == $email) {
-            $finduser = true;
-            break;
-        }
-    }
-    fclose($file);
-    if ($finduser) {
-        return $user_data;
+    $conn = dbConnect();
+
+    // Construct SQL query
+    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
+
+    // Execute query
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        return $user;
     } else {
         return false;
     }
@@ -127,48 +120,36 @@ function getUserByEmail($email)
 // Get all user
 function getAllUsersByName($patient_name)
 {
-    $dir = dirname(__FILE__);
-    $file = fopen($dir . '/users.txt', 'r');
-    $users = array();
-    while (!feof($file)) {
-        $data = fgets($file);
-        $user_data = explode('|', $data);
-        if (count($user_data) > 1) {
-            if ($user_data[0] == $patient_name) {
-                $users[] = array(
-                    'username' => $user_data[0],
-                    'email' => $user_data[1],
-                    'phone' => $user_data[2],
-                    'address' => $user_data[3],
-                    'type' => $user_data[4],
-                    'problems' => $user_data[5],
-                );
-            }
-        }
+    $conn = dbConnect();
+
+    // Construct SQL query
+    $sql = "SELECT * FROM patients WHERE username = '$patient_name' LIMIT 1";
+
+    // Execute query
+    $result = mysqli_query($conn, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $user = mysqli_fetch_assoc($result);
+        return $user;
+    } else {
+        return false;
     }
-    fclose($file);
-    return $users;
 }
-// update user
 function updateUser($user)
 {
-    $dir = dirname(__FILE__);
-    $file = fopen($dir . '/doctor.txt', 'r');
-    $finduser = false;
-    while (!feof($file)) {
-        $data = fgets($file);
-        $user_data = explode('|', $data);
-        if ($user_data[2] == $user['email']) {
-            $finduser = true;
-            break;
-        }
-    }
-    fclose($file);
-    if ($finduser) {
-        $file = fopen('../model/doctor.txt', 'w');
-        $user = $user['username'] . '|' . $user['password'] . '|' . $user['email'] . '|' . $user['phone'] . '|' . $user['address'] . '|' . $user['type'] . "|" . "\n";
-        fwrite($file, $user);
-        fclose($file);
+    $conn = dbConnect();
+
+    // Escape user input to avoid SQL injection
+    $username = mysqli_real_escape_string($conn, $user['username']);
+    $password = mysqli_real_escape_string($conn, $user['password']);
+    $email = mysqli_real_escape_string($conn, $user['email']);
+    $phone = mysqli_real_escape_string($conn, $user['phone']);
+    $address = mysqli_real_escape_string($conn, $user['address']);
+
+    // Construct SQL query
+    $sql = "UPDATE users SET username='$username', password='$password', phone='$phone', adress='$address' WHERE email='$email'";
+
+    // Execute query
+    if (mysqli_query($conn, $sql)) {
         return true;
     } else {
         return false;

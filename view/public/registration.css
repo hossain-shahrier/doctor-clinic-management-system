@@ -1,0 +1,134 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.btn {
+  background-color: #49b1f7;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+/* 3c58a0 */
+.btn:hover {
+  background-color: #3c58a0;
+  color: #fff;
+}
+
+/* Navbar styles */
+nav {
+  background-color: #49b1f7; /* Dark blue color */
+  color: #fff; /* White text color */
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Navbar styles */
+nav {
+  background-color: #49b1f7; /* Dark blue color */
+  color: #fff; /* White text color */
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #fff; /* White text color */
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu li {
+  margin-left: 30px;
+}
+
+.menu li a {
+  text-decoration: none;
+  font-weight: 400;
+  color: #fff; /* White text color */
+  transition: color 0.3s ease;
+}
+
+.menu li a:hover {
+  color: #bdc3c7; /* Grey color */
+}
+
+/* form styles */
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.signup-content {
+  margin-top: 5rem;
+}
+.signup-content form {
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.form-group {
+  padding: 10px;
+}
+h1 {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #49b1f7;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  width: 95%;
+  padding: 10px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+p {
+  margin-top: 20px;
+  text-align: center;
+}
+
+a {
+  color: #49b1f7;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  color: #3493d3;
+}

@@ -8,28 +8,28 @@ $user = getUserByEmail($email);
 
 ?>
 
-<div>
-
-    <h4>My informations</h4>
-    <table>
+<section class="info-container">
+    <h1 class="info-heading">My information</h1>
+    <table class="info-table">
         <tr>
             <td>Username</td>
-            <td><?php echo $user[0]; ?></td>
+            <td><?php echo $user['username']; ?></td>
         </tr>
         <tr>
             <td>Email</td>
-            <td><?php echo $user[2]; ?></td>
+            <td><?php echo $user['email']; ?></td>
         </tr>
         <tr>
             <td>Phone</td>
-            <td><?php echo $user[3]; ?></td>
+            <td><?php echo $user['phone']; ?></td>
         </tr>
         <tr>
             <td>Address</td>
-            <td><?php echo $user[4]; ?></td>
+            <td><?php echo $user['adress']; ?></td>
         </tr>
-
         <tr>
-            <td><a href="edit_profile.php">Edit</a></td>
+            <td><a href="edit_profile.php" class="edit-link">Edit</a></td>
         </tr>
     </table>
+</section>
+<?php include '../template/footer.php'; ?>

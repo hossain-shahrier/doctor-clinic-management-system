@@ -12,28 +12,34 @@ $user = getUserByEmail($email);
     <form action="../../../controller/editController.php" method="POST">
         <table>
             <tr>
-                <td>Username</td>
-                <td><input type="text" name="username" value="<?php echo $user[0]; ?>"></td>
+                <td><label for="username">Username</label></td>
+                <td><input type="text" id="username" name="username" value="<?php echo $user['username']; ?>"></td>
             </tr>
             <tr>
-                <td>Email</td>
-                <td><input type="text" name="email" value="<?php echo $user[2]; ?>"></td>
+                <td><label for="password">Password</label></td>
+                <td><input type="password" id="password" name="password" value="<?php echo $user['password'] ?>"></td>
             </tr>
             <tr>
-                <td>Phone</td>
-                <td><input type="text" name="phone" value="<?php echo $user[3]; ?>"></td>
+                <td><label for="email">Email</label></td>
+                <td><input type="text" id="email" name="email" value="<?php echo $user['email'] ?>"></td>
             </tr>
             <tr>
-                <td>Address</td>
-                <td><input type="text" name="address" value="<?php echo $user[4]; ?>"></td>
+                <td><label for="phone">Phone</label></td>
+                <td><input type="text" id="phone" name="phone" value="<?php echo $user['phone']; ?>"></td>
+            </tr>
+            <tr>
+                <td><label for="address">Address</label></td>
+                <td><input type="text" id="address" name="address" value="<?php echo $user['adress']; ?>"></td>
             </tr>
 
             <tr>
-                <td><input type="submit" name="submit" value="Update"></td>
+                <td></td>
+                <td><input class="btn" type="submit" name="submit" value="Update"></td>
             </tr>
         </table>
     </form>
 </div>
+
 <?php
 include '../template/footer.php';
 ?>

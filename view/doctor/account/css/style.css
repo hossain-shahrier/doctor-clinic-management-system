@@ -1,0 +1,260 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.btn {
+  background-color: #49b1f7;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+/* 3c58a0 */
+.btn:hover {
+  background-color: #3c58a0;
+  color: #fff;
+}
+
+/* Navbar styles */
+nav {
+  background-color: #49b1f7; /* Dark blue color */
+  color: #fff; /* White text color */
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Navbar styles */
+nav {
+  background-color: #49b1f7; /* Dark blue color */
+  color: #fff; /* White text color */
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #fff; /* White text color */
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu li {
+  margin-left: 30px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #fff; /* White text color */
+  transition: color 0.3s ease;
+}
+
+.menu li a:hover {
+  color: #bdc3c7; /* Grey color */
+}
+/* Home section */
+.home-search {
+  background-color: #f5f5f5;
+  padding: 50px;
+  height: calc(80vh - 80px);
+}
+
+.home-search-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.home-search-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.home-search-input {
+  margin-bottom: 20px;
+}
+
+.home-search-input label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.home-search-input input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.home-search-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.home-search-button:hover {
+  background-color: #0069d9;
+}
+/* Section Nav */
+.section-nav-items {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.section-nav-items ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.section-nav-items li {
+  font-size: 18px;
+}
+
+.section-nav-items a {
+  text-decoration: none;
+  color: #555;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+.section-nav-items a:hover {
+  background-color: #f5f5f5;
+}
+/* Profile section */
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(90vh - 80px);
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.info-heading {
+  margin-top: 0;
+  font-size: 30px;
+  margin-bottom: 15px;
+}
+
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 18px;
+}
+
+.info-table td {
+  padding: 18px;
+  border-bottom: 1px solid #ccc;
+}
+
+.info-table td:first-child {
+  font-weight: bold;
+  color: #333;
+  width: 120px;
+}
+
+.edit-link {
+  color: #0084ff;
+  text-decoration: none;
+}
+
+.edit-link:hover {
+  text-decoration: underline;
+}
+/* Edit details page */
+.account-details {
+  margin: 50px auto;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.account-details h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.account-details table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.account-details table td {
+  padding: 10px;
+}
+
+.account-details table input[type='text'],
+input[type='password'] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.account-details table td:first-child {
+  width: 150px;
+  font-weight: bold;
+}
+/* Record section */
+
+/* Footer */
+footer {
+  width: 100%;
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+}
+
+footer p {
+  font-size: 14px;
+  text-align: center;
+}
+
+footer a {
+  color: #fff;
+}
