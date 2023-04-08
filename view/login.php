@@ -43,7 +43,9 @@
             <div class="form-group">
                 <input class="btn" name="submit" type="submit" value="Submit" />
             </div>
-
+            <div class="form-group">
+                <a href="./forgot_password.php">Forgot Password?</a>
+            </div>
             <p>Don't have an account? <a href="./register.php"><strong>Register</strong></a></p>
         </form>
     </div>
