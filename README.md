@@ -10,6 +10,6 @@
 - PHP
 - MySQL
 
-<!-- Adding Image -->
+## Project-sample
 
 ![alt text](https://github.com/hossain-shahrier/doctor-clinic-management-system/blob/main/my.jpg)
