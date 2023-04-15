@@ -6,7 +6,7 @@
 
 - Html
 - Css
-- Js
+- JavaScript
 - PHP
 - MySQL
 
