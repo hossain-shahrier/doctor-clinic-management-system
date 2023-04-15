@@ -61,7 +61,7 @@
                 <div class="form-group">
                     <label for="address">Address</label>
                     <input type="text" name="address">
-                    <span id="error-phone" style="color:red;"></span>
+                    <span id="error-address" style="color:red;"></span>
 
                 </div>
                 <div class="form-group">
