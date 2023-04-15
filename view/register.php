@@ -27,31 +27,42 @@
     </nav>
     <div class="form-container">
         <div class="signup-content">
-            <form id="form" name="login" action="../controller/registrationCheck.php" method="POST">
+            <form id="form" name="signup" onsubmit="return validateForm()" action="../controller/registrationCheck.php" method="POST">
                 <h1>Registration</h1>
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" name="username" required>
+                    <input type="text" name="username">
+                    <span id="error-username" style="color:red;"></span>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" name="email" required>
+                    <input type="email" name="email">
+                    <span id="error-email" style="color:red;"></span>
+
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" required>
+                    <input type="password" name="password">
+                    <span id="error-password" style="color:red;"></span>
+
                 </div>
                 <div class="form-group">
                     <label for="repassword">Re-password</label>
-                    <input type="password" name="repassword" required>
+                    <input type="password" name="repassword">
+                    <span id="error-repassword" style="color:red;"></span>
+
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
-                    <input type="text" name="phone" required>
+                    <input type="text" name="phone">
+                    <span id="error-phone" style="color:red;"></span>
+
                 </div>
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <input type="text" name="address" required>
+                    <input type="text" name="address">
+                    <span id="error-phone" style="color:red;"></span>
+
                 </div>
                 <div class="form-group">
                     <input class="btn" name="submit" type="submit" value="Submit">
@@ -63,3 +74,4 @@
 </body>
 
 </html>
+<script src="public/index.js"></script>

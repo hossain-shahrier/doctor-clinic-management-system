@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (isset($_SESSION['email'])) {
+    header('location: ./doctor/account/');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +24,7 @@
                 <a href="/doctor/view/index.html">Healthify</a>
             </div>
             <ul class="menu">
-                <li><a href="/doctor/view/index.html">Home</a></li>
+                <li><button onclick="home()" style="border: none;text-decoration: none;color: white; background:none ;cursor: pointer; font-size: large;">Home</button></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Services</a></li>
                 <li><a href="#">Contact</a></li>
@@ -28,18 +34,23 @@
     </nav>
     <div class="signin-content">
         <div class="error"></div>
-        <form id="form" name="signup" action="../controller/loginCheck.php" method="POST">
+        <form id="form" name="login" onsubmit="return validation()" action="../controller/loginCheck.php" method="POST">
             <h1>Login</h1>
             <div class="form-group">
                 <label for="email">Email</label><br />
-                <input type="email" name="email" required />
+                <input type="email" name="email" id="email" />
+                <span id="error" style="color:red;"></span>
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label><br />
-                <input type="password" name="password" required />
+                <input type="password" name="password" id="password" />
+                <span id="errorPass" style="color:red;"></span>
             </div>
-
+            <div class="form-group">
+                <label for="rememberMe">Remember Me</label>
+                <input type="checkbox" name="rememberMe">
+            </div>
             <div class="form-group">
                 <input class="btn" name="submit" type="submit" value="Submit" />
             </div>
@@ -53,3 +64,4 @@
 </body>
 
 </html>
+<script src="public/index.js"></script>

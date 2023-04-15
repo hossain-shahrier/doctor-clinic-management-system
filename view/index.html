@@ -22,7 +22,9 @@
           <li><a href="#">About</a></li>
           <li><a href="#">Services</a></li>
           <li><a href="#">Contact</a></li>
-          <li><button class="btn login-btn">Login</button></li>
+          <li>
+            <button class="btn login-btn" onclick="login()">Login</button>
+          </li>
         </ul>
       </div>
     </nav>
@@ -118,9 +120,4 @@
     </footer>
   </body>
 </html>
-<script>
-  const loginBtn = document.querySelector('.login-btn');
-  loginBtn.addEventListener('click', () => {
-    window.location.href = 'login.php'; // Replace 'login.html' with the URL of your login page
-  });
-</script>
+<script src="public/index.js"></script>
