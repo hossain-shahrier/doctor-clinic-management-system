@@ -1,22 +1,26 @@
 <?php
 session_start();
 require_once("../model/main_model.php");
-if (isset($_POST['submit'])) {
+
+header('Content-Type: application/json');
+
+if (isset($_POST['email']) && isset($_POST['password'])) {
     $email      = $_POST['email'];
     $password   = $_POST['password'];
-    if (empty($email) || empty($password)) {
-        echo "Null Input";
-    } else {
+
+    if (!empty($email) && !empty($password)) {
         $status = validateUser($email, $password);
-        echo $status;
         if ($status) {
             $_SESSION['email'] = $email;
             $_SESSION['username'] = userName($email);
             $_SESSION['type'] = userType($email);
 
-            header('Location: ../view/doctor/home.php');
+            $response = array('success' => true);
         } else {
-            echo "Invalid User";
+            $response = array('success' => false, 'errors' => array('email' => 'Invalid email or password.', 'password' => 'Invalid email or password.'));
         }
+    } else {
+        $response = array('success' => false, 'errors' => array('email' => 'All fields are required.', 'password' => 'All fields are required.'));
     }
 }
+echo json_encode($response);

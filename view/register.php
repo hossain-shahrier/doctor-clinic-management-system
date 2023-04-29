@@ -42,15 +42,13 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password">
+                    <input type="password" name="password" id="password">
                     <span id="error-password" style="color:red;"></span>
-
                 </div>
                 <div class="form-group">
                     <label for="repassword">Re-password</label>
-                    <input type="password" name="repassword">
+                    <input type="password" name="repassword" id="repassword">
                     <span id="error-repassword" style="color:red;"></span>
-
                 </div>
                 <div class="form-group">
                     <label for="phone">Phone</label>
@@ -62,10 +60,10 @@
                     <label for="address">Address</label>
                     <input type="text" name="address">
                     <span id="error-address" style="color:red;"></span>
-
                 </div>
+                <span id="'other_error" style="color:red;"></span>
                 <div class="form-group">
-                    <input class="btn" name="submit" type="submit" value="Submit">
+                    <input id="submit-button" class="btn" name="submit" type="submit" value="Submit">
                 </div>
                 <p class="login-link">Have an account? <a href="./login.php">Login here</a></p>
             </form>

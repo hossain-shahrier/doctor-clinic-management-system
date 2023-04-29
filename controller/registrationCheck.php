@@ -1,42 +1,66 @@
- <?php
-    session_start();
-    require_once("../model/main_model.php");
+<?php
+session_start();
+require_once("../model/main_model.php");
 
-    if (isset($_POST['submit'])) {
-        $username = $_POST['username'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $repassword = $_POST['repassword'];
-        $phone = $_POST['phone'];
-        $address = $_POST['address'];
-        if (empty($username) || empty($email) || empty($password) || empty($repassword) || empty($phone)) {
-            echo "Please provide all fields";
-        } else {
-            if (strlen($username) > 3) {
-                if (strlen($password) > 4) {
-                    if ($password == $repassword) {
-                        $user = [
-                            'username' => $username,
-                            'password' => $password,
-                            'email' => $email,
-                            'phone' => $phone,
-                            'address' => $address,
-                            'type' => 'doctor',
-                        ];
-                        $status = insertUser($user);
-                        if ($status) {
-                            header('location: ../view/login.php');
-                        } else {
-                            echo "error..try again";
-                        }
-                    } else {
-                        echo "password & confirm password mismatch...";
-                    }
-                } else {
-                    echo "Password must be more than 4 letters";
-                }
-            } else {
-                echo "Username must be More than 3 letters";
-            }
-        }
-    }
+$errors = array();
+
+// Check if the request is a POST request
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405); // Method Not Allowed
+    die();
+}
+$username = isset($_POST['username']) ? $_POST['username'] : null;
+$email = isset($_POST['email']) ? $_POST['email'] : null;
+$password = isset($_POST['password']) ? $_POST['password'] : null;
+$repassword = isset($_POST['repassword']) ? $_POST['repassword'] : null;
+$phone = isset($_POST['phone']) ? $_POST['phone'] : null;
+$address = isset($_POST['address']) ? $_POST['address'] : null;
+
+// Validate form data
+$errors = [];
+
+if (empty($username)) {
+    $errors['username'] = 'Please enter your username.';
+}
+
+if (empty($email)) {
+    $errors['email'] = 'Please enter your email.';
+} else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $errors['email'] = 'Invalid email format.';
+}
+
+if (empty($password)) {
+    $errors['password'] = 'Please enter your password.';
+} else if (strlen($password) < 6) {
+    $errors['password'] = 'Password must be at least 6 characters long.';
+}
+
+if (empty($repassword)) {
+    $errors['repassword'] = 'Please re-enter your password.';
+} else if ($password !== $repassword) {
+    $errors['repassword'] = 'Passwords do not match.';
+}
+
+if (empty($phone)) {
+    $errors['phone'] = 'Please enter your phone number.';
+}
+
+if (empty($address)) {
+    $errors['address'] = 'Please enter your address.';
+}
+if (empty($errors)) {
+    $user = [
+        'username' => $username,
+        'password' => $password,
+        'email' => $email,
+        'phone' => $phone,
+        'address' => $address,
+        'type' => 'doctor',
+    ];
+    insertUser($user);
+    $response = ['success' => true, 'errors' => $errors];
+} else {
+    $response = ['success' => false, 'errors' => $errors];
+}
+header('Content-Type: application/json');
+echo json_encode($response);

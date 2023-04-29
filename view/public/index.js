@@ -9,40 +9,39 @@ function home() {
 }
 
 function validation() {
+    // prevent the default form submission
+    event.preventDefault();
+
     // get the values of the form inputs
     var email = document.forms["login"]["email"].value;
     var password = document.forms["login"]["password"].value;
-    var rememberMe = document.forms["login"]["rememberMe"].checked;
 
-    // check if the email is empty
-    if (email == "") {
-        document.getElementById('error').innerHTML = "Please enter your email address .";
-        return false;
-    }
+    // create an AJAX request
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = xhr.responseText;
+                var data = JSON.parse(response);
+                if (data.success) {
+                    window.location.href = "../view/doctor/home.php";
+                } else {
+                    document.getElementById("error").innerHTML = data.errors.email;
+                    document.getElementById("errorPass").innerHTML = data.errors.password;
+                }
+            } else {
+                console.log('There was a problem with the request.');
+            }
+        }
+    };
+    xhr.open('POST', '../controller/loginCheck.php');
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.send('email=' + email + '&password=' + password);
 
-    // check if the email format is valid
-    var emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
-        document.getElementById('error').innerHTML = "Invalid email format.";
-        return false;
-    }
-
-    // check if the password is empty
-    if (password == "") {
-        document.getElementById('errorPass').innerHTML = "Please enter your password .";
-        return false;
-    }
-
-    // check if the password is at least 6 characters long
-    if (password.length < 6) {
-        document.getElementById('errorPass').innerHTML = "Password must be at least 6 characters long .";
-        return false;
-    }
-    if (rememberMe) {
-        document.cookie = "email=" + email + ";expires=30;path=/";
-    }
-    return true;
+    return false;
 }
+
+
 
 window.onload = function () {
     var email = getCookie('email');
@@ -59,6 +58,7 @@ function getCookie(name) {
 }
 
 function validateForm() {
+    // Collect form data
     var username = document.forms["signup"]["username"].value;
     var email = document.forms["signup"]["email"].value;
     var password = document.forms["signup"]["password"].value;
@@ -66,63 +66,74 @@ function validateForm() {
     var phone = document.forms["signup"]["phone"].value;
     var address = document.forms["signup"]["address"].value;
 
-    var error = false;
+    // Validate form data
+    validateRegistration(username, email, password, repassword, phone, address);
 
-    // Check if username is empty
-    if (username == "") {
-        document.getElementById("error-username").innerHTML = "Please enter your username.";
-        return error;
-    }
+    // Always return false to prevent the  from submitting
+    return false;
+}
 
-    // Check if email is empty
-    if (email == "") {
-        document.getElementById("error-email").innerHTML = "Please enter your email.";
-        return error;
-    }
+// AJAX
 
-    // Check if email format is valid
-    var emailRegex = /^\S+@\S+\.\S+$/;
-    if (!emailRegex.test(email)) {
-        document.getElementById("error-email").innerHTML = "Invalid email format.";
-        return error;
-    }
+function validateRegistration(username, email, password, repassword, phone, address) {
+    var xhr = new XMLHttpRequest();
+    var url = "../controller/registrationCheck.php";
+    var params = "username=" + encodeURIComponent(username) +
+        "&email=" + encodeURIComponent(email) +
+        "&password=" + encodeURIComponent(password) +
+        "&repassword=" + encodeURIComponent(repassword) +
+        "&phone=" + encodeURIComponent(phone) +
+        "&address=" + encodeURIComponent(address);
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = xhr.responseText;
 
-    // Check if password is empty
-    if (password == "") {
-        document.getElementById("error-password").innerHTML = "Please enter your password.";
-        return error;
-    }
+            var errors = {};
+            if (response) {
+                errors = JSON.parse(response).errors;
+            }
+            // Check for successful registration response and redirect to login page
+            var data = JSON.parse(response);
+            if (data.success) {
+                // handle successful insert, e.g. redirect to login page
+                window.location.href = "login.php";
+            }
+            // Display errors to user
+            if (errors.username) {
+                document.getElementById("error-username").innerHTML = errors.username;
+            } else {
+                document.getElementById("error-username").innerHTML = '';
+            }
+            if (errors.email) {
+                document.getElementById("error-email").innerHTML = errors.email;
+            } else {
+                document.getElementById("error-email").innerHTML = '';
+            }
+            if (errors.password) {
+                document.getElementById("error-password").innerHTML = errors.password;
+            } else {
+                document.getElementById("error-password").innerHTML = '';
+            }
+            if (errors.repassword) {
+                document.getElementById("error-repassword").innerHTML = errors.repassword;
+            } else {
+                document.getElementById("error-repassword").innerHTML = '';
+            }
+            if (errors.phone) {
+                document.getElementById("error-phone").innerHTML = errors.phone;
+            } else {
+                document.getElementById("error-phone").innerHTML = '';
+            }
+            if (errors.address) {
+                document.getElementById("error-address").innerHTML = errors.address;
+            } else {
+                document.getElementById("error-address").innerHTML = '';
+            }
 
-    // Check if password is at least 6 characters long
-    if (password.length < 6) {
-        document.getElementById("error-password").innerHTML = "Password must be at least 6 characters long.";
-        return error;
-    }
+        }
 
-    // Check if re-entered password is empty
-    if (repassword == "") {
-        document.getElementById("error-repassword").innerHTML = "Please re-enter your password.";
-        return error;
-    }
-
-    // Check if passwords match
-    if (password != repassword) {
-        document.getElementById("error-repassword").innerHTML = "Passwords do not match.";
-        return error;
-    }
-
-    // Check if phone number is empty
-    if (phone == "") {
-        document.getElementById("error-phone").innerHTML = "Please enter your phone number.";
-        return error;
-    }
-
-    // Check if address is empty
-    if (address == "") {
-        document.getElementById("error-address").innerHTML = "Please enter your address.";
-        return error;
-    }
-
-    // Return false if there was an error, true otherwise
-    return !error;
+    };
+    xhr.send(params);
 }
