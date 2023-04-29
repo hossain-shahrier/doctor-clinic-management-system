@@ -34,59 +34,95 @@ function validateUser($email, $password)
     // Create database connection
     $conn = dbConnect();
 
-    // Sanitize input values
-    $email = mysqli_real_escape_string($conn, $email);
-    $password = mysqli_real_escape_string($conn, $password);
+    // Prepare the query
+    $sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+    $stmt = mysqli_prepare($conn, $sql);
 
-    // Query the database for user with matching email and password
-    $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
-    $result = mysqli_query($conn, $sql);
+    // Bind the parameters
+    mysqli_stmt_bind_param($stmt, "ss", $email, $password);
+
+    // Execute the query
+    mysqli_stmt_execute($stmt);
+
+    // Get the result
+    $result = mysqli_stmt_get_result($stmt);
 
     // Check if query returns a row
     if (mysqli_num_rows($result) == 1) {
+        mysqli_close($conn);
         return true;
     } else {
+        mysqli_close($conn);
         return false;
     }
-
-    // Close the database connection
-    mysqli_close($conn);
 }
+
 
 // Get user name
 function userName($email)
 {
     $conn = dbConnect();
-    $sql = "SELECT username FROM users WHERE email='$email'";
-    $result = mysqli_query($conn, $sql);
+
+    // Construct SQL query
+    $sql = "SELECT username FROM users WHERE email=?";
+
+    // Prepare statement
+    $stmt = mysqli_prepare($conn, $sql);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, "s", $email);
+
+    // Execute statement
+    mysqli_stmt_execute($stmt);
+
+    // Get result
+    $result = mysqli_stmt_get_result($stmt);
+
     if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
         return $user['username'];
     } else {
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
         return false;
     }
 }
 
-
+// Get user type
 function userType($email)
 {
     $conn = dbConnect();
 
     // Construct SQL query
-    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
+    $sql = "SELECT * FROM users WHERE email = ? LIMIT 1";
 
-    // Execute query
-    $result = mysqli_query($conn, $sql);
+    // Prepare statement
+    $stmt = mysqli_prepare($conn, $sql);
+
+    // Bind parameters
+    mysqli_stmt_bind_param($stmt, "s", $email);
+
+    // Execute statement
+    mysqli_stmt_execute($stmt);
+
+    // Get result
+    $result = mysqli_stmt_get_result($stmt);
+
     if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
         return $user['type'];
     } else {
+        mysqli_stmt_close($stmt);
+        mysqli_close($conn);
         return false;
     }
 }
 
 
-// get all doctors
 function getAllDoctors()
 {
     $dir = dirname("../../../../controller/user.txt");
